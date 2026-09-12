@@ -27,31 +27,26 @@ This means n can be as large as 100,000.
 
 Large input → need a more efficient algorithm.
 
-┌───────────────────────────────────────────┐
-│       TIME COMPLEXITY                     │
-├───────────────────────────────────────────┤
-│ O(1)       → Constant                     │
-│ O(log n)   → Logarithmic                  │
-│ O(n)       → Linear                       │
-│ O(n log n) → Linearithmic                 │
-│ O(n²)      → Quadratic                    │
-│ O(n³)      → Cubic                        │
-│ O(2ⁿ)      → Exponential                  │
-│ O(n!)      → Factorial                    │
-└───────────────────────────────────────────┘
+# TIME COMPLEXITY
+ O(1)       → Constant
+ O(log n)   → Logarithmic
+ O(n)       → Linear
+ O(n log n) → Linearithmic
+ O(n²)      → Quadratic
+ O(n³)      → Cubic
+ O(2ⁿ)      → Exponential
+ O(n!)      → Factorial                     
 
-┌───────────────────────────────────────────┐
-│       CONSTRAINT → COMPLEXITY             │
-├───────────────────────────────────────────┤
-│ n ≤ 10        → O(n!), O(2ⁿ)              │
-│ n ≤ 20        → O(2ⁿ)                     │
-│ n ≤ 10²       → O(n³)                     │
-│ n ≤ 10³       → O(n²)                     │
-│ n ≤ 10⁴       → O(n log n)                │
-│ n ≤ 10⁵       → O(n), O(n log n)          │
-│ n ≤ 10⁶       → O(n)                      │
-│ n ≥ 10⁷       → O(n) or better            │
-└───────────────────────────────────────────┘
+# CONSTRAINT → COMPLEXITY
+ n ≤ 10        → O(n!), O(2ⁿ)
+ n ≤ 20        → O(2ⁿ)
+ n ≤ 10²       → O(n³)
+ n ≤ 10³       → O(n²)
+ n ≤ 10⁴       → O(n log n)
+ n ≤ 10⁵       → O(n), O(n log n)
+ n ≤ 10⁶       → O(n)
+ n ≥ 10⁷       → O(n) or better 
+
 # 3. Operation Counting
 
 We estimate how many times the main work is performed.
