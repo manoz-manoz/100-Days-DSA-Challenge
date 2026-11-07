@@ -1,0 +1,179 @@
+# Length of Cycle in a Linked List
+
+## 1. Problem in simple words
+
+Given the head of a linked list, find the **length of the cycle** if a cycle exists.
+
+A cycle occurs when a node's `next` pointer connects to a previously visited node instead of `null`.
+
+The length of a cycle is the number of nodes present inside that loop.
+
+## 2. Input and Output
+
+**Input:**
+- Head of a linked list.
+
+**Output:**
+- Number of nodes in the cycle.
+- Return `0` if no cycle exists.
+
+**Example:**
+
+```text
+10 → 20 → 30 → 40 → 50
+          ↑         |
+          └─────────┘
+```
+
+The cycle contains:
+
+```text
+30 → 40 → 50 → 30
+```
+
+Output: `3`
+
+## 3. Brute Force Approach
+
+**Idea:** Use a HashMap to store each visited node and the position where it was first visited.
+
+**Algorithm:**
+
+1. Create a HashMap to store nodes and their visiting positions.
+2. Start traversing from `head`.
+3. If the current node is already in the map:
+   - A cycle is detected.
+   - Calculate its length using the current position minus the first visiting position.
+4. Otherwise, store the current node and its position.
+5. Move to the next node.
+6. If traversal reaches `null`, return `0`.
+
+**Java-style pseudocode:**
+
+```java
+function findCycleLength(head) {
+    HashMap<Node, Integer> visited = new HashMap<>();
+
+    Node current = head;
+    int position = 0;
+
+    while (current != null) {
+        if (visited.containsKey(current)) {
+            return position - visited.get(current);
+        }
+
+        visited.put(current, position);
+        current = current.next;
+        position++;
+    }
+
+    return 0;
+}
+```
+
+**Complexity:**
+- Time: O(n)
+- Space: O(n)
+
+## 4. Find the Bottleneck
+
+The HashMap stores every visited node.
+
+This requires extra memory proportional to the number of nodes.
+
+Can we detect the cycle and calculate its length without storing nodes?
+
+Yes! We can use Floyd's Cycle Detection Algorithm.
+
+## 5. Identify the Pattern
+
+**Pattern: Slow and Fast Pointers (Floyd's Cycle Detection)**
+
+- Slow pointer moves one step at a time.
+- Fast pointer moves two steps at a time.
+- If a cycle exists, both pointers eventually meet inside the cycle.
+
+After they meet, we can calculate the cycle length.
+
+## 6. Build Intuition
+
+Imagine two people running around a circular track.
+
+- Person A takes one step at a time.
+- Person B takes two steps at a time.
+
+Person B will eventually catch Person A.
+
+Once they meet:
+
+1. Keep one pointer at the meeting node.
+2. Move another pointer through the cycle.
+3. Count every movement.
+4. Stop when the pointer returns to the meeting node.
+
+The count is the cycle length.
+
+## 7. Optimized Approach
+
+**Algorithm:**
+
+1. Initialize `slow` and `fast` at `head`.
+2. Move `slow` one step and `fast` two steps.
+3. If `fast` or `fast.next` becomes `null`, return `0`.
+4. If both pointers meet, a cycle exists.
+5. Initialize `count = 1`.
+6. Move another pointer from `slow.next`.
+7. Continue until it reaches `slow` again, increasing `count` each time.
+8. Return `count`.
+
+**Java-style pseudocode:**
+
+```java
+function findCycleLength(head) {
+    Node slow = head;
+    Node fast = head;
+
+    while (fast != null && fast.next != null) {
+        slow = slow.next;
+        fast = fast.next.next;
+
+        if (slow == fast) {
+            int count = 1;
+            Node current = slow.next;
+
+            while (current != slow) {
+                count++;
+                current = current.next;
+            }
+
+            return count;
+        }
+    }
+
+    return 0;
+}
+```
+
+**Complexity:**
+- Time: O(n)
+- Auxiliary Space: O(1)
+
+## 8. Common Mistakes
+
+- Using `slow.equals(fast)` instead of reference comparison when checking whether both pointers refer to the same node.
+- Forgetting to check `fast != null && fast.next != null`.
+- Starting the count at `0` instead of `1` after the meeting point.
+- Counting the meeting node twice.
+- Trying to traverse a cyclic linked list without a stopping condition.
+
+## 9. Interview Explanation
+
+"I use Floyd's Cycle Detection Algorithm with slow and fast pointers. The slow pointer moves one step, while the fast pointer moves two steps.
+
+If they meet, a cycle exists. From the meeting node, I start another traversal and count the nodes until I return to the same meeting node.
+
+That count gives the length of the cycle.
+
+If the fast pointer reaches null, no cycle exists, so I return zero.
+
+The solution takes O(n) time and O(1) auxiliary space."
